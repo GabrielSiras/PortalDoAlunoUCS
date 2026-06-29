@@ -6,12 +6,12 @@
 
     <div class="login-logo">
       <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" width="90" height="90">
-        <image 
-          x="3" 
-          y="3" 
-          width="74" 
+        <image
+          x="3"
+          y="3"
+          width="74"
           height="74"
-          :href="logoUcsUrl" 
+          :href="logoUcsUrl"
           preserveAspectRatio="xMidYMid meet"
         />
       </svg>
@@ -42,12 +42,14 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
+import { useAuth } from '../composables/useAuth.js'
 import logoUcsUrl from '../assets/images/logo-ucs.png'
 
 const router = useRouter()
+const { logout } = useAuth()
 
 function handleLogout() {
-  localStorage.removeItem('ucs_logged')
+  logout()
   router.push('/login')
 }
 </script>
@@ -87,29 +89,6 @@ function handleLogout() {
   flex-direction: column;
   align-items: center;
   gap: 12px;
-}
-
-.logo-text {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.logo-ucs {
-  font-size: 36px;
-  font-weight: 900;
-  color: var(--color-text);
-  letter-spacing: 2px;
-  line-height: 1;
-}
-
-.logo-full {
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--color-text);
-  text-align: center;
-  letter-spacing: 0.5px;
-  line-height: 1.4;
 }
 
 .avatar-big {
