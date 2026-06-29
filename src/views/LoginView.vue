@@ -2,12 +2,12 @@
   <div class="login-page">
     <div class="login-logo">
       <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" width="90" height="90">
-        <image 
-          x="3" 
-          y="3" 
-          width="74" 
+        <image
+          x="3"
+          y="3"
+          width="74"
           height="74"
-          :href="logoUcsUrl" 
+          :href="logoUcsUrl"
           preserveAspectRatio="xMidYMid meet"
         />
       </svg>
@@ -15,6 +15,24 @@
 
     <div class="avatar-big">
       <i class="fa-solid fa-user"></i>
+    </div>
+
+    <!-- Seleção de Perfil -->
+    <div class="role-tabs">
+      <button
+        :class="['role-tab', { active: role === 'aluno' }]"
+        @click="role = 'aluno'"
+      >
+        <i class="fa-solid fa-graduation-cap"></i>
+        <span>Aluno</span>
+      </button>
+      <button
+        :class="['role-tab', { active: role === 'professor' }]"
+        @click="role = 'professor'"
+      >
+        <i class="fa-solid fa-chalkboard-user"></i>
+        <span>Professor</span>
+      </button>
     </div>
 
     <div class="login-form">
@@ -42,9 +60,12 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useAuth } from '../composables/useAuth.js'
 import logoUcsUrl from '../assets/images/logo-ucs.png'
 
 const router = useRouter()
+const { login, isAluno } = useAuth()
+const role = ref('aluno')
 const usuario = ref('gsluz3@ucs.br')
 const senha = ref('')
 const showPass = ref(false)
@@ -56,8 +77,10 @@ function handleLogin() {
     return
   }
   erro.value = ''
-  localStorage.setItem('ucs_logged', 'true')
-  router.push('/home')
+  const nome = role.value === 'aluno' ? 'Gabriel' : 'Profª. Ana'
+  login(role.value, nome)
+  const dest = role.value === 'aluno' ? '/aluno/home' : '/professor/home'
+  router.push(dest)
 }
 </script>
 
@@ -70,7 +93,7 @@ function handleLogin() {
   align-items: center;
   justify-content: center;
   padding: 40px 32px;
-  gap: 28px;
+  gap: 24px;
 }
 
 .login-logo {
@@ -78,29 +101,6 @@ function handleLogin() {
   flex-direction: column;
   align-items: center;
   gap: 12px;
-}
-
-.logo-text {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.logo-ucs {
-  font-size: 36px;
-  font-weight: 900;
-  color: var(--color-text);
-  letter-spacing: 2px;
-  line-height: 1;
-}
-
-.logo-full {
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--color-text);
-  text-align: center;
-  letter-spacing: 0.5px;
-  line-height: 1.4;
 }
 
 .avatar-big {
@@ -113,6 +113,40 @@ function handleLogin() {
   justify-content: center;
   font-size: 44px;
   color: #888;
+}
+
+.role-tabs {
+  display: flex;
+  width: 100%;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 2px solid var(--color-primary);
+}
+
+.role-tab {
+  flex: 1;
+  padding: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  background: transparent;
+  color: var(--color-primary);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.2s, color 0.2s;
+  font-family: var(--font);
+}
+
+.role-tab.active {
+  background: var(--color-primary);
+  color: white;
+}
+
+.role-tab i {
+  font-size: 18px;
 }
 
 .login-form {
