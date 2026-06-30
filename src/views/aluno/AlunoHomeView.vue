@@ -10,7 +10,7 @@
           <i class="fa-solid fa-circle-check"></i>
         </div>
         <div class="status-info">
-          <div class="status-date"><strong>Status de hoje: 29/06 – AULA CONFIRMADA</strong></div>
+          <div class="status-date"><strong>Status de hoje: 01/07 – AULA CONFIRMADA</strong></div>
           <div class="status-next">Sua próxima aula: <strong>Interface Humano Computador</strong> – Bloco 71, Sala 307 (19:40)</div>
         </div>
       </div>
@@ -39,21 +39,24 @@
 
     <!-- Próximas Entregas -->
     <div class="section-title">PRÓXIMAS ENTREGAS</div>
+    <div v-if="entregasAtivas.length === 0" class="sem-entregas">
+      Nenhuma entrega pendente.
+    </div>
     <div class="entregas-list">
       <div
-        v-for="entrega in entregas"
+        v-for="entrega in entregasAtivas"
         :key="entrega.id"
         class="entrega-item card"
       >
         <span class="entrega-dot" :style="{ background: entrega.color }"></span>
         <div class="entrega-info">
           <div class="entrega-nome">{{ entrega.nome }}</div>
-          <div class="entrega-data">{{ entrega.data }}</div>
+          <div class="entrega-data">{{ formatarData(entrega.data) }}</div>
         </div>
         <div
           class="entrega-check"
           :class="{ checked: entrega.done }"
-          @click="entrega.done = !entrega.done"
+          @click="toggle(entrega.id)"
         >
           <i v-if="entrega.done" class="fa-solid fa-check"></i>
         </div>
@@ -63,16 +66,21 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue'
 import { useAuth } from '../../composables/useAuth.js'
+import { useEntregas } from '../../composables/useEntregas.js'
 import PageHeader from '../../components/PageHeader.vue'
 
 const { userName } = useAuth()
+const { entregasAtivas, toggle } = useEntregas()
 
-const entregas = reactive([
-  { id: 1, nome: 'IHC – Apresentação do trabalho', data: 'Quarta-feira (06/05)', color: '#f97316', done: true },
-  { id: 2, nome: 'Banco de Dados I – Trabalho Final', data: 'Sexta-feira (08/05)', color: '#22c55e', done: false },
-])
+const diasSemanaNome = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado']
+
+function formatarData(dataStr) {
+  const [dia, mes, ano] = dataStr.split('/').map(Number)
+  const d = new Date(ano, mes - 1, dia)
+  const diaSemana = diasSemanaNome[d.getDay()]
+  return `${diaSemana} (${String(dia).padStart(2, '0')}/${String(mes).padStart(2, '0')})`
+}
 </script>
 
 <style scoped>
@@ -120,9 +128,9 @@ const entregas = reactive([
 
 .quick-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-bottom: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
 }
 
 .quick-card {
@@ -200,5 +208,12 @@ const entregas = reactive([
 .entrega-check.checked {
   background: var(--color-primary);
   border-color: var(--color-primary);
+}
+
+.sem-entregas {
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 14px;
+  padding: 20px;
 }
 </style>

@@ -131,8 +131,9 @@ const turmasHoje = computed(() =>
 
 .quick-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+  margin-top: 4px;
 }
 
 .quick-card {

@@ -14,8 +14,8 @@ export const turmas = [
     nome: 'IHC — Interface Humano Computador',
     bloco: '71',
     sala: '307',
-    horario: 'Quinta-feira, 19:40',
-    diaSemana: 'Quinta',
+    horario: 'Quarta-feira, 19:40',
+    diaSemana: 'Quarta',
     alunos: [
       'Gabriel Sironi da Luz',
       'João Miguel Santos',
@@ -45,7 +45,7 @@ export const turmas = [
     nome: 'Programação Orientada a Objetos',
     bloco: '71',
     sala: '405',
-    horario: 'Quinta-feira, 21:30',
+    horario: 'Quinta-feira, 19:40',
     diaSemana: 'Quinta',
     alunos: [
       'Gabriel Sironi da Luz',
@@ -105,38 +105,33 @@ export const frequenciaInicial = {
 export const avisosIniciais = [
   {
     id: 1,
-    disciplina: null,
-    nome: 'Aviso de Feriado – 01/05',
-    corpo: 'Prezados alunos!\nInformamos que a faculdade estará fechada por causa do Feriado dos Trabalhadores!',
-    color: '#ef4444',
-    urgente: true,
-    data: '2026-04-28',
-  },
-  {
-    id: 2,
     disciplina: 'IHC — Interface Humano Computador',
     nome: 'Trabalho Adiado',
-    corpo: 'Prezados alunos!\nInformo que a apresentação do trabalho foi adiada para a aula de 06/05.',
+    corpo: 'Prezados alunos!\nInformo que a apresentação do trabalho foi adiada para a aula de 08/07.',
     color: '#f97316',
     urgente: false,
     data: '2026-04-30',
   },
   {
-    id: 3,
-    disciplina: 'Banco de Dados I',
+    id: 2,
+    disciplina: 'POO - Programação Orientada a Objetos',
     nome: 'Cancelamento de Aula',
-    corpo: 'Prezados alunos!\nVenho a informar que a aula de hoje irá ser cancelada, pelos motivos citados na última aula.',
-    color: '#22c55e',
-    urgente: false,
-    data: '2026-05-02',
+    corpo: 'Prezados alunos!\nVenho a informar que a aula de amanhã irá ser cancelada.',
+    color: '#f97316',
+    urgente: true,
+    data: '2026-07-02',
   },
 ]
 
 export const eventosIniciais = [
-  { id: 1, diaSemana: 'Qua', diaNum: '06', mesNome: 'Maio', dia: 6, mes: 4, nome: 'IHC – Apresentação do trabalho – 19:40', local: '(Bloco 71, Sala 307)', color: '#f97316', turmaId: 1 },
-  { id: 2, diaSemana: 'Sex', diaNum: '08', mesNome: 'Maio', dia: 8, mes: 4, nome: 'Banco de Dados I – Trabalho Final', local: '(Bloco 71, Sala 203)', color: '#22c55e', turmaId: 2 },
-  { id: 3, diaSemana: 'Qui', diaNum: '29', mesNome: 'Junho', dia: 29, mes: 5, nome: 'IHC – Aula Normal – 19:40', local: '(Bloco 71, Sala 307)', color: '#1a1adb', turmaId: 1 },
-  { id: 4, diaSemana: 'Qui', diaNum: '29', mesNome: 'Junho', dia: 29, mes: 5, nome: 'POO – Aula Normal – 21:30', local: '(Bloco 71, Sala 405)', color: '#1a1adb', turmaId: 3 },
+  { id: 1, diaSemana: 'Qui', diaNum: '01', mesNome: 'Julho', dia: 1, mes: 6, nome: 'IHC – Aula Normal – 19:40', local: '(Bloco 71, Sala 307)', color: '#1a1adb', turmaId: 1 },
+  { id: 2, diaSemana: 'Sex', diaNum: '02', mesNome: 'Julho', dia: 2, mes: 6, nome: 'POO – Aula Cancelada – 19:40', local: '(Bloco 71, Sala 405)', color: '#f97316', turmaId: 3 },
+]
+
+export const entregasIniciais = [
+  { id: 1, nome: 'Banco de Dados I – Trabalho Final', data: '01/07/2026', color: '#22c55e', done: false },
+  { id: 2, nome: 'IHC – Apresentação do trabalho', data: '08/07/2026', color: '#f97316', done: false },
+  { id: 3, nome: 'POO – Projeto Final', data: '22/07/2026', color: '#1a1adb', done: false },
 ]
 
 export const boletosIniciais = {
@@ -153,25 +148,15 @@ export const boletosIniciais = {
 }
 
 /**
- * Inicializa o localStorage com dados padrão caso ainda não existam.
+ * Inicializa o localStorage com os dados atuais do código.
+ * Sempre sobrescreve — o código é a fonte da verdade.
  */
 export function inicializarDados() {
-  if (!localStorage.getItem('ucs_turmas')) {
-    localStorage.setItem('ucs_turmas', JSON.stringify(turmas))
-  }
-  if (!localStorage.getItem('ucs_notas')) {
-    localStorage.setItem('ucs_notas', JSON.stringify(notasIniciais))
-  }
-  if (!localStorage.getItem('ucs_frequencia')) {
-    localStorage.setItem('ucs_frequencia', JSON.stringify(frequenciaInicial))
-  }
-  if (!localStorage.getItem('ucs_avisos')) {
-    localStorage.setItem('ucs_avisos', JSON.stringify(avisosIniciais))
-  }
-  if (!localStorage.getItem('ucs_boletos')) {
-    localStorage.setItem('ucs_boletos', JSON.stringify(boletosIniciais))
-  }
-  if (!localStorage.getItem('ucs_eventos')) {
-    localStorage.setItem('ucs_eventos', JSON.stringify(eventosIniciais))
-  }
+  localStorage.setItem('ucs_turmas', JSON.stringify(turmas))
+  localStorage.setItem('ucs_notas', JSON.stringify(notasIniciais))
+  localStorage.setItem('ucs_frequencia', JSON.stringify(frequenciaInicial))
+  localStorage.setItem('ucs_avisos', JSON.stringify(avisosIniciais))
+  localStorage.setItem('ucs_boletos', JSON.stringify(boletosIniciais))
+  localStorage.setItem('ucs_eventos', JSON.stringify(eventosIniciais))
+  localStorage.setItem('ucs_entregas', JSON.stringify(entregasIniciais))
 }

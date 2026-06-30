@@ -72,17 +72,18 @@ import { useNotas } from '../../composables/useNotas.js'
 import { useFrequencia } from '../../composables/useFrequencia.js'
 import PageHeader from '../../components/PageHeader.vue'
 
-const { userName } = useAuth()
+const { userName, userFullName } = useAuth()
 const { turmas } = useTurmas()
 const { getNotasFormatadas, getMediaParcial, getMediaNumerica } = useNotas()
 const { getPorcentagemFrequencia, getStatusFrequencia } = useFrequencia()
 
 const disciplinasAluno = reactive(
   turmas.value.map(t => {
-    const notas = getNotasFormatadas(t.id, userName.value)
-    const media = getMediaParcial(t.id, userName.value)
-    const mediaNum = getMediaNumerica(t.id, userName.value)
-    const freq = getPorcentagemFrequencia(t.id, userName.value)
+    const nomeBusca = userFullName.value
+    const notas = getNotasFormatadas(t.id, nomeBusca)
+    const media = getMediaParcial(t.id, nomeBusca)
+    const mediaNum = getMediaNumerica(t.id, nomeBusca)
+    const freq = getPorcentagemFrequencia(t.id, nomeBusca)
     const freqStatus = getStatusFrequencia(freq)
     const alerta = mediaNum > 0 && mediaNum < 6.0 ? 'Risco de Recuperação' : null
 

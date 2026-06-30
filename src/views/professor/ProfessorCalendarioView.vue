@@ -278,12 +278,12 @@ function adicionar() {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 4px 2px;
+  padding: 8px 4px;
   border-radius: 6px;
-  font-size: 13px;
-  min-height: 34px;
+  font-size: 14px;
+  min-height: 52px;
   position: relative;
-  gap: 2px;
+  gap: 3px;
 }
 
 .cal-dia.hoje > span:first-child {

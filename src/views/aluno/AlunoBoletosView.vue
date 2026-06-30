@@ -5,7 +5,7 @@
 
     <div class="card financeiro-card">
       <div class="aluno-info">
-        <div class="aluno-nome">Gabriel Sironi da Luz</div>
+        <div class="aluno-nome">{{ userFullName }}</div>
         <div class="aluno-curso">Curso – Jogos Digitais (GRA012321V)</div>
       </div>
 
@@ -40,7 +40,7 @@ import { useAuth } from '../../composables/useAuth.js'
 import { useBoletos } from '../../composables/useBoletos.js'
 import PageHeader from '../../components/PageHeader.vue'
 
-const { userName } = useAuth()
+const { userName, userFullName } = useAuth()
 const { boletos, pagarBoleto } = useBoletos()
 
 function pagar(boleto) {
@@ -71,7 +71,7 @@ function pagar(boleto) {
 
 .mensalidades-grid {
   display: flex;
-  gap: 0;
+  gap: 24px;
   align-items: flex-start;
 }
 
@@ -80,20 +80,21 @@ function pagar(boleto) {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  min-width: 0;
 }
 
 .col-title {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 700;
   line-height: 1.4;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
 .divider-v {
   width: 1px;
   background: var(--color-border);
   align-self: stretch;
-  margin: 0 16px;
+  margin: 0;
 }
 
 .boleto-data {

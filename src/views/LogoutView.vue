@@ -1,41 +1,36 @@
 <template>
   <div class="login-page">
-    <button class="btn-back" @click="router.back()">
-      <i class="fa-solid fa-arrow-left"></i>
-    </button>
-
-    <div class="login-logo">
-      <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" width="90" height="90">
-        <image
-          x="3"
-          y="3"
-          width="74"
-          height="74"
-          :href="logoUcsUrl"
-          preserveAspectRatio="xMidYMid meet"
-        />
-      </svg>
-    </div>
-
-    <div class="avatar-big">
-      <i class="fa-solid fa-user"></i>
-    </div>
-
-    <div class="login-form">
-      <div class="input-group">
-        <label>Usuário:</label>
-        <input type="text" value="gsluz3@ucs.br" readonly />
-      </div>
-      <div class="input-group">
-        <label>Senha:</label>
-        <div class="password-wrapper">
-          <input type="password" value="••••••••••••" readonly />
-          <button class="toggle-pass"><i class="fa-solid fa-eye"></i></button>
-        </div>
-      </div>
-      <button class="btn-sair" @click="handleLogout">
-        Sair <i class="fa-solid fa-right-from-bracket"></i>
+    <div class="login-card">
+      <button class="btn-back" @click="router.back()">
+        <i class="fa-solid fa-arrow-left"></i>
       </button>
+
+      <div class="login-logo">
+        <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" width="64" height="64">
+          <image x="3" y="3" width="74" height="74" :href="logoUcsUrl" preserveAspectRatio="xMidYMid meet"/>
+        </svg>
+      </div>
+
+      <div class="avatar-small">
+        <i class="fa-solid fa-user"></i>
+      </div>
+
+      <div class="login-form">
+        <div class="input-group">
+          <label>Usuário:</label>
+          <input type="text" :value="userEmail" readonly />
+        </div>
+        <div class="input-group">
+          <label>Senha:</label>
+          <div class="password-wrapper">
+            <input type="password" value="••••••••••••" readonly />
+            <button class="toggle-pass"><i class="fa-solid fa-eye"></i></button>
+          </div>
+        </div>
+        <button class="btn-sair" @click="handleLogout">
+          Sair <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -46,7 +41,7 @@ import { useAuth } from '../composables/useAuth.js'
 import logoUcsUrl from '../assets/images/logo-ucs.png'
 
 const router = useRouter()
-const { logout } = useAuth()
+const { logout, userEmail } = useAuth()
 
 function handleLogout() {
   logout()
@@ -59,25 +54,36 @@ function handleLogout() {
   min-height: 100vh;
   background: var(--color-bg);
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 40px 32px;
-  gap: 28px;
+  padding: 24px;
+}
+
+.login-card {
+  background: var(--color-white);
+  border-radius: var(--radius);
+  padding: 36px 32px 32px;
+  width: 100%;
+  max-width: 380px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
   position: relative;
 }
 
 .btn-back {
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top: 16px;
+  left: 16px;
   background: var(--color-primary);
   color: white;
   border: none;
   border-radius: var(--radius-sm);
-  width: 40px;
-  height: 40px;
-  font-size: 16px;
+  width: 36px;
+  height: 36px;
+  font-size: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -88,18 +94,17 @@ function handleLogout() {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
 }
 
-.avatar-big {
-  width: 90px;
-  height: 90px;
+.avatar-small {
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
   background: #ccc;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 44px;
+  font-size: 30px;
   color: #888;
 }
 
@@ -107,31 +112,31 @@ function handleLogout() {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
 }
 
 .input-group {
   display: flex;
   align-items: center;
-  background: var(--color-white);
+  background: var(--color-bg);
   border: 1.5px solid var(--color-border);
   border-radius: var(--radius-sm);
   overflow: hidden;
 }
 
 .input-group label {
-  padding: 12px 14px;
+  padding: 10px 12px;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 13px;
   color: var(--color-text);
   white-space: nowrap;
   border-right: 1.5px solid var(--color-border);
-  background: #f5f5f5;
+  background: #eee;
 }
 
 .input-group input {
   flex: 1;
-  padding: 12px 14px;
+  padding: 10px 12px;
   border: none;
   outline: none;
   font-size: 14px;
@@ -146,7 +151,7 @@ function handleLogout() {
 
 .password-wrapper input {
   flex: 1;
-  padding: 12px 14px;
+  padding: 10px 12px;
   border: none;
   outline: none;
   font-size: 14px;
@@ -155,24 +160,25 @@ function handleLogout() {
 .toggle-pass {
   background: none;
   border: none;
-  padding: 0 12px;
+  padding: 0 10px;
   color: var(--color-primary);
-  font-size: 16px;
+  font-size: 15px;
   cursor: pointer;
 }
 
 .btn-sair {
   background: var(--color-primary);
   color: white;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
-  padding: 14px 24px;
+  padding: 12px 24px;
   border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
   transition: background 0.2s;
+  margin-top: 4px;
 }
 
 .btn-sair:hover {
